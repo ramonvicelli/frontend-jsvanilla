@@ -1,8 +1,28 @@
 class NegotiationController {
+
+  constructor() {
+    const $ = document.querySelector.bind(document);
+
+    // avoid traversing the DOM many times
+    this._amount = $('#amount')
+    this._date = $('#date')
+    this._value = $('#value')
+  }
+
   add(event) {
     event.preventDefault();
 
-    let inputDate = document.querySelector('#date')
-    let inputAmount = document.querySelector('#amount')
+    const negotiation = new Negotiation(
+      treatDate(this._date),
+      this._amount.value,
+      this._value.value
+    );
+
+    console.log(negotiation);
+
+    function treatDate(date) {
+      return new Date(date.value.split('-'));
+      // return new Date(date.value.replace(/-/g,','));
+    }
   }
 }
