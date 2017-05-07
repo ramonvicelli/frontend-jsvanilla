@@ -3,11 +3,11 @@ class MessageView {
     this._element = element;
   }
 
-  _template(text) {
-    return `<p class="alert alert-info">${text}</p>`;
+  _template(model) {
+    return `<p class="alert alert-info">${model}</p>`;
   }
 
-  update(text) {
-    this._element.innerHTML = this._template(text);
+  update(model) {
+    this._element.innerHTML = this._template(model);
   }
 }
