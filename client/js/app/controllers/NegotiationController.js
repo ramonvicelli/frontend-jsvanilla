@@ -11,7 +11,7 @@ class NegotiationController {
     this._negotiationsList = new NegotiationList();
     this._negotiatioView = new NegotiationView();
     this._message = new Message();
-    this._messageView = new MessageView('#message');
+    this._messageView = new MessageView($('.message'));
   }
 
   add(event) {
