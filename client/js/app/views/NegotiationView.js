@@ -22,9 +22,7 @@ class NegotiationView {
 
   _updateFoot(negotiation) {
     const tr = this.table.tFoot.firstElementChild;
-    console.log(tr);
     const tdValue = tr.lastElementChild;
-    console.log(tdValue);
     tdValue.innerHTML = Number(tdValue.innerHTML) + negotiation.volume;
   }
 }
