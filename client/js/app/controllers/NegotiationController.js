@@ -26,6 +26,14 @@ class NegotiationController {
     this._cleanForm();
   }
 
+  clean(){
+    this._negotiationsList.removeAll();
+    this._negotiatioView.clean();
+
+    this._message.text = 'Negotiations removes successfuly'
+    this._messageView.update(this._message);
+  }
+
   _cleanForm() {
     this._amount.value = 1;
     this._date.value = '';

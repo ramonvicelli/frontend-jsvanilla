@@ -11,6 +11,11 @@ class NegotiationView {
     this._updateFoot(negotiation);
   }
 
+  clean(){
+    this.table.tBodies[0].innerHTML = '';
+    this.table.tFoot.innerHTML = '';
+  }
+
   _newBodyRow(negotiation) {
     return `<tr>
         <td>${DateHelper.dateToString(negotiation.date)}</td>

@@ -11,4 +11,8 @@ class NegotiationList {
   get negotiations() {
     return [].concat(this._negotiations);
   }
+
+  removeAll() {
+    this._negotiations = [];
+  }
 }
