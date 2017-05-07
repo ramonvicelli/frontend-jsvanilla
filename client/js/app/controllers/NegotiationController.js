@@ -7,6 +7,7 @@ class NegotiationController {
     this._amount = $('#amount')
     this._date = $('#date')
     this._value = $('#value')
+    this._negotiationsList = new NegotiationList();
   }
 
   add(event) {
@@ -18,6 +19,6 @@ class NegotiationController {
       this._value.value
     );
 
-    console.log(negotiation);
+    this._negotiationsList.add(negotiation);
   }
 }
