@@ -4,7 +4,9 @@ class MessageView {
   }
 
   _template(model) {
-    return `<p class="alert alert-info">${model.text}</p>`;
+    const text = model.text;
+
+    return text ? `<p class="alert alert-info">${text}</p>` : '<p></p>';
   }
 
   update(model) {
