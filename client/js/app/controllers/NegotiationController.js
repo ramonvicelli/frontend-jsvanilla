@@ -13,16 +13,11 @@ class NegotiationController {
     event.preventDefault();
 
     const negotiation = new Negotiation(
-      treatDate(this._date),
+      DateHelper.stringToDate(this._date.value),
       this._amount.value,
       this._value.value
     );
 
     console.log(negotiation);
-
-    function treatDate(date) {
-      return new Date(date.value.split('-'));
-      // return new Date(date.value.replace(/-/g,','));
-    }
   }
 }
