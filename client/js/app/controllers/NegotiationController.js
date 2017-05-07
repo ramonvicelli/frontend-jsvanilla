@@ -27,7 +27,7 @@ class NegotiationController {
     this._date.value = '';
     this._value.value = 0.0
 
-    this._amount.focus();
+    this._date.focus();
   }
 
   _createNegotiation() {
