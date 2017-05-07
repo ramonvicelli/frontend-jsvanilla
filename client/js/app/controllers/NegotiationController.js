@@ -20,5 +20,14 @@ class NegotiationController {
     );
 
     this._negotiationsList.add(negotiation);
+    this._cleanForm();
+  }
+
+  _cleanForm(){
+    this._amount.value = 1;
+    this._date.value = '';
+    this._value.value = 0.0
+
+    this._amount.focus();
   }
 }
