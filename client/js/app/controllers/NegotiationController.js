@@ -11,6 +11,7 @@ class NegotiationController {
     this._negotiationsList = new NegotiationList();
     this._negotiatioView = new NegotiationView();
     this._message = new Message();
+    this._messageView = new MessageView('#message');
   }
 
   add(event) {
@@ -21,6 +22,7 @@ class NegotiationController {
     this._negotiationsList.add(negotiation);
     this._negotiatioView.update(negotiation)
     this._message.text = 'Negotiation saves successfully';
+    this._messageView.update(this._message);
     this._cleanForm();
   }
 
