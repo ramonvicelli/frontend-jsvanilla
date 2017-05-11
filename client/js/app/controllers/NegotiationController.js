@@ -8,10 +8,30 @@ class NegotiationController {
     this._date = $('#date')
     this._value = $('#value')
 
-    this._negotiationsList = new NegotiationList(
-      negotiation => this._negotiatioView.update(negotiation),
-      () => this._negotiatioView.clean()
-    );
+    const self = this;
+
+    this._negotiationsList = new Proxy(new NegotiationList(), {
+
+        get(target, prop, receiver){
+          if('add' === prop && typeof target[prop] === typeof Function){
+            return function(){
+              Reflect.apply(target[prop], target, arguments)
+              self._negotiatioView.update(arguments[0]);
+            }
+          }
+
+          if('removeAll' === prop && typeof target[prop] === typeof Function){
+            console.log('entrou213');
+            return function(){
+              Reflect.apply(target[prop], target, arguments)
+              self._negotiatioView.clean();
+            }
+          }
+
+          return Reflect.get(target, prop, receivers);
+        }
+    });
+
     this._negotiatioView = new NegotiationView();
     this._message = new Message();
     this._messageView = new MessageView($('.message'));
