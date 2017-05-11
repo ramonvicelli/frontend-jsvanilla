@@ -1,29 +1,39 @@
 class ProxyFactory {
 
-  static create(object, props, action) {
-    return new Proxy(object, {
+  static create(object, ...actions) {
+    return new Proxy(new NegotiationList(), {
 
       get(target, prop, receiver) {
-        if (props.include(prop) && ProxyFactory._isFunction()) {
+        const objectFind = actions.find(methodToTrap);
+        if (objectFind) {
           return function () {
             Reflect.apply(target[prop], target, arguments)
-            return action(target);
+            objectFind.action(arguments[0]);
           }
         }
+        return Reflect.get(target, prop, receiver);
 
-        return Reflect.get(target, prop, receivers);
+        function methodToTrap(item) {
+          return item.prop === prop && ProxyFactory._IsFunction(target[prop]);
+        }
       },
 
       set(target, prop, value, receiver) {
-        if (props.includes(prop)) {
+        const objectFind = actions.find(methodToTrap);
+        if (objectFind) {
           target[prop] = value;
-          action(target);
+          objectFind.action(target);
         }
 
         return Reflect.set(target, prop, value, receiver);
+
+        function methodToTrap(item) {
+          return item.prop === prop;
+        }
       }
     })
   }
+
   static _IsFunction(func) {
     return typeof func === typeof Function;
   }

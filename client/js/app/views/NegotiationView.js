@@ -13,7 +13,7 @@ class NegotiationView {
 
   clean(){
     this.table.tBodies[0].innerHTML = '';
-    this.table.tFoot.innerHTML = '';
+    this.table.tFoot.firstElementChild.lastElementChild.innerHTML = '0';
   }
 
   _newBodyRow(negotiation) {
