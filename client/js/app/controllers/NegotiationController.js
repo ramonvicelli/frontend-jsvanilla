@@ -8,7 +8,10 @@ class NegotiationController {
     this._date = $('#date')
     this._value = $('#value')
 
-    this._negotiationsList = new NegotiationList();
+    this._negotiationsList = new NegotiationList(
+      negotiation => this._negotiatioView.update(negotiation),
+      () => this._negotiatioView.clean()
+    );
     this._negotiatioView = new NegotiationView();
     this._message = new Message();
     this._messageView = new MessageView($('.message'));
@@ -18,9 +21,8 @@ class NegotiationController {
     event.preventDefault();
 
     const negotiation = this._createNegotiation();
-
     this._negotiationsList.add(negotiation);
-    this._negotiatioView.update(negotiation)
+
     this._message.text = 'Negotiation saves successfully';
     this._messageView.update(this._message);
     this._cleanForm();
@@ -28,7 +30,6 @@ class NegotiationController {
 
   clean(){
     this._negotiationsList.removeAll();
-    this._negotiatioView.clean();
 
     this._message.text = 'Negotiations removes successfuly'
     this._messageView.update(this._message);

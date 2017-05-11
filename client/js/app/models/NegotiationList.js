@@ -1,11 +1,14 @@
 class NegotiationList {
 
-  constructor() {
+  constructor(fnUpdateView, fnCleanView) {
     this._negotiations = [];
+    this._fnUpdateView = fnUpdateView;
+    this._fnCleanView = fnCleanView;
   }
 
   add(negotiation) {
     this._negotiations.push(negotiation);
+    this._fnUpdateView(negotiation);
   }
 
   get negotiations() {
@@ -14,5 +17,6 @@ class NegotiationList {
 
   removeAll() {
     this._negotiations = [];
+    this._fnCleanView();
   }
 }
