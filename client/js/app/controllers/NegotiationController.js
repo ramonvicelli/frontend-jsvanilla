@@ -8,32 +8,12 @@ class NegotiationController {
     this._date = $('#date')
     this._value = $('#value')
 
-    const self = this;
-
-    this._negotiationsList = new Proxy(new NegotiationList(), {
-
-        get(target, prop, receiver){
-          if('add' === prop && typeof target[prop] === typeof Function){
-            return function(){
-              Reflect.apply(target[prop], target, arguments)
-              self._negotiatioView.update(arguments[0]);
-            }
-          }
-
-          if('removeAll' === prop && typeof target[prop] === typeof Function){
-            console.log('entrou213');
-            return function(){
-              Reflect.apply(target[prop], target, arguments)
-              self._negotiatioView.clean();
-            }
-          }
-
-          return Reflect.get(target, prop, receivers);
-        }
-    });
+    this._negotiationsList = NegotiationListProxyFactory.create(this, new NegotiationList());
 
     this._negotiatioView = new NegotiationView();
-    this._message = new Message();
+    this._message = ProxyFactory.create(
+      new Message(), ['text'], model => this._messageView.update(model)
+    );
     this._messageView = new MessageView($('.message'));
   }
 
@@ -42,17 +22,14 @@ class NegotiationController {
 
     const negotiation = this._createNegotiation();
     this._negotiationsList.add(negotiation);
-
     this._message.text = 'Negotiation saves successfully';
-    this._messageView.update(this._message);
     this._cleanForm();
   }
 
-  clean(){
+  clean() {
     this._negotiationsList.removeAll();
 
     this._message.text = 'Negotiations removes successfuly'
-    this._messageView.update(this._message);
   }
 
   _cleanForm() {

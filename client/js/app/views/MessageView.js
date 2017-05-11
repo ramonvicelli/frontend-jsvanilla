@@ -10,7 +10,6 @@ class MessageView {
   }
 
   update(model) {
-    console.log(this._element);
     this._element.innerHTML = this._template(model);
   }
 }
