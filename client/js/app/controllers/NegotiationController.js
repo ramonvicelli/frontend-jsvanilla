@@ -8,12 +8,8 @@ class NegotiationController {
     this._date = $('#date')
     this._value = $('#value')
 
-    this._negotiatioView = new NegotiationView();
-    this._messageView = new MessageView($('.message'));
-
     this._negotiationsList = this._createNegotiationList();
     this._message = this._createMessage();
-
   }
 
   add(event) {
@@ -46,12 +42,14 @@ class NegotiationController {
   }
 
   _createNegotiationList() {
+    const negotiationView = new NegotiationView();
+
     return ProxyFactory.create(new NegotiationList(), {
       prop: 'add',
-      action: model => this._negotiatioView.update(model)
+      action: model => negotiationView.update(model)
     }, {
       prop: 'removeAll',
-      action: () => this._negotiatioView.clean()
+      action: () => negotiationView.clean()
     })
   }
 
@@ -59,7 +57,7 @@ class NegotiationController {
     return ProxyFactory.create(
       new Message(), {
         prop: 'text',
-        action: model => this._messageView.update(model)
+        action: model => new MessageView($('.message')).update(model)
       }
     );
   }
