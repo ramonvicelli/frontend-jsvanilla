@@ -9,7 +9,7 @@ class NegotiationController {
     this._value = $('#value')
 
     this._negotiationsList = this._createNegotiationList();
-    this._message = this._createMessage();
+    this._message = this._createMessage($);
   }
 
   add(event) {
@@ -23,6 +23,20 @@ class NegotiationController {
   clean() {
     this._negotiationsList.removeAll();
     this._message.text = 'Negotiations removes successfuly'
+  }
+
+  import () {
+    const service = new NegotiationService();
+
+    Promise.all([service.getByWeek(), service.getByLastWeek(), service.getByDelayedWeek()])
+      .then(negotiations => {
+        negotiations
+          .reduce((newList, list) => newList.concat(list), [])
+          .forEach(negotiation => this._negotiationsList.add(negotiation));
+
+        this._message.text = 'Negotiations imported successfully.';
+      })
+      .catch(error => this._message.text = err);
   }
 
   _cleanForm() {
@@ -53,7 +67,7 @@ class NegotiationController {
     })
   }
 
-  _createMessage() {
+  _createMessage($) {
     return ProxyFactory.create(
       new Message(), {
         prop: 'text',

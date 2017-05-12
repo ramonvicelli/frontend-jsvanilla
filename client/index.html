@@ -35,7 +35,7 @@
   </form>
 
   <div class="text-center">
-    <button class="btn btn-primary text-center" type="button">
+    <button type="button" onclick="negotiationCtrl.import()" class="btn btn-primary text-center">
           Import Negotiations
       </button>
     <button onclick="negotiationCtrl.clean()" class="btn btn-primary text-center" type="button">
@@ -75,6 +75,7 @@
   <script src="js/app/views/MessageView.js"></script>
   <script src="js/app/views/NegotiationView.js"></script>
   <script src="js/app/services/ProxyFactory.js"></script>
+  <script src="js/app/services/NegotiationService.js"></script>
 
   <script>
     let negotiationCtrl = new NegotiationController();
