@@ -14,10 +14,13 @@ class NegotiationController {
 
   add(event) {
     event.preventDefault();
-
-    this._negotiationsList.add(this._createNegotiation());
-    this._message.text = 'Negotiation saves successfully';
-    this._cleanForm();
+    try {
+      this._negotiationsList.add(this._createNegotiation());
+      this._message.text = 'Negotiation saves successfully';
+      this._cleanForm();
+    } catch (error) {
+      this._message.text = error;
+    }
   }
 
   clean() {
