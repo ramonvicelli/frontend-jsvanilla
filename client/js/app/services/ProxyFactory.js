@@ -1,14 +1,12 @@
 class ProxyFactory {
 
   static create(object, ...traps) {
-    console.log('traps', traps);
     return new Proxy(object, {
 
       get(target, prop, receiver) {
         const trap = traps.find(methodToTrap);
         if (trap) {
           return function () {
-            console.log('asdasd');
             Reflect.apply(target[prop], target, arguments)
             trap.action(arguments[0]);
           }

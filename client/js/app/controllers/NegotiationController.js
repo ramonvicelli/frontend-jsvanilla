@@ -11,34 +11,21 @@ class NegotiationController {
     this._negotiatioView = new NegotiationView();
     this._messageView = new MessageView($('.message'));
 
-    this._negotiationsList = ProxyFactory.create(new NegotiationList(), {
-      prop: 'add',
-      action: model => this._negotiatioView.update(model)
-    }, {
-      prop: 'removeAll',
-      action: () => this._negotiatioView.clean()
-    });
+    this._negotiationsList = this._createNegotiationList();
+    this._message = this._createMessage();
 
-    this._message = ProxyFactory.create(
-      new Message(), {
-        prop: 'text',
-        action: model => this._messageView.update(model)
-      }
-    );
   }
 
   add(event) {
     event.preventDefault();
 
-    const negotiation = this._createNegotiation();
-    this._negotiationsList.add(negotiation);
+    this._negotiationsList.add(this._createNegotiation());
     this._message.text = 'Negotiation saves successfully';
     this._cleanForm();
   }
 
   clean() {
     this._negotiationsList.removeAll();
-
     this._message.text = 'Negotiations removes successfuly'
   }
 
@@ -55,6 +42,25 @@ class NegotiationController {
       DateHelper.stringToDate(this._date.value),
       this._amount.value,
       this._value.value
+    );
+  }
+
+  _createNegotiationList() {
+    return ProxyFactory.create(new NegotiationList(), {
+      prop: 'add',
+      action: model => this._negotiatioView.update(model)
+    }, {
+      prop: 'removeAll',
+      action: () => this._negotiatioView.clean()
+    })
+  }
+
+  _createMessage() {
+    return ProxyFactory.create(
+      new Message(), {
+        prop: 'text',
+        action: model => this._messageView.update(model)
+      }
     );
   }
 }
