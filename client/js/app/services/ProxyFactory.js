@@ -1,14 +1,16 @@
 class ProxyFactory {
 
-  static create(object, ...actions) {
-    return new Proxy(new NegotiationList(), {
+  static create(object, ...traps) {
+    console.log('traps', traps);
+    return new Proxy(object, {
 
       get(target, prop, receiver) {
-        const objectFind = actions.find(methodToTrap);
-        if (objectFind) {
+        const trap = traps.find(methodToTrap);
+        if (trap) {
           return function () {
+            console.log('asdasd');
             Reflect.apply(target[prop], target, arguments)
-            objectFind.action(arguments[0]);
+            trap.action(arguments[0]);
           }
         }
         return Reflect.get(target, prop, receiver);
@@ -19,10 +21,10 @@ class ProxyFactory {
       },
 
       set(target, prop, value, receiver) {
-        const objectFind = actions.find(methodToTrap);
-        if (objectFind) {
+        const trap = traps.find(methodToTrap);
+        if (trap) {
           target[prop] = value;
-          objectFind.action(target);
+          trap.action(target);
         }
 
         return Reflect.set(target, prop, value, receiver);
