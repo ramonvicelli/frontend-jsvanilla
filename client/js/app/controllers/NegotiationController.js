@@ -40,8 +40,7 @@ class NegotiationController {
 
 
   import () {
-    const service = new NegotiationService();
-    service.get()
+    this._service.get()
       .then(negotiations => negotiations.filter(negotiation => !this._negotiationsList.negotiations.some(existingNegotiation => JSON.stringify(existingNegotiation) === JSON.stringify(negotiation))))
       .then(negotiations => {
         negotiations.forEach(negotiation => this._negotiationsList.add(negotiation));
