@@ -39,18 +39,21 @@ class NegotiationController {
       })
   }
 
+
   import () {
     const service = new NegotiationService();
-
+    console.log(this);
     service.get()
+      .then(negotiations => negotiations.filter(negotiation =>
+          !this._negotiationsList.negotiations.some(existingNegotiation =>
+            JSON.stringify(existingNegotiation) === JSON.stringify(negotiation)))
+      )
       .then(negotiations => {
-        negotiations
-          .reduce((newList, list) => newList.concat(list), [])
-          .forEach(negotiation => this._negotiationsList.add(negotiation));
+        negotiations.forEach(negotiation => this._negotiationsList.add(negotiation));
 
         this._message.text = 'Negotiations imported successfully.';
       })
-      .catch(error => this._message.text = err);
+      .catch(error => this._message.text = error);
   }
 
   _cleanForm() {
