@@ -3,8 +3,9 @@ class NegotiationService {
     this._httpService = new HttpService();
   }
 
-  get(){
-    return Promise.all([this._getByWeek(), this._getByLastWeek(), this._getByDelayedWeek()]);
+  get() {
+    return Promise.all([this._getByWeek(), this._getByLastWeek(), this._getByDelayedWeek()])
+      .then(negotiations => negotiations.reduce((newList, list) => newList.concat(list), []));
   }
 
   _getByWeek() {
