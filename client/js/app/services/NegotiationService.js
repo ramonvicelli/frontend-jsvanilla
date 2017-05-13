@@ -20,6 +20,13 @@ class NegotiationService {
       .then(negotiations => negotiations.reduce((newList, list) => newList.concat(list), []));
   }
 
+  import (currentNegotiationList) {
+    return this.get()
+      .then(negotiations =>
+        negotiations.filter(negotiation =>
+          !currentNegotiationList.some(existingNegotiation => JSON.stringify(existingNegotiation) === JSON.stringify(negotiation))))
+  }
+
   _getByWeek() {
     return this._httpService.get('negotiation/week')
       .then(itens => itens.map(item => new Negotiation(new Date(item.date), item.amount, item.value)))
