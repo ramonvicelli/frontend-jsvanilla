@@ -14,7 +14,7 @@
   <h1 class="text-center">Negotiations</h1>
   <div class="message"></div>
 
-  <form class="form" onsubmit="negotiationCtrl.add(event)">
+  <form class="form">
 
     <div class="form-group">
       <label for="date">Date</label>
@@ -35,10 +35,10 @@
   </form>
 
   <div class="text-center">
-    <button type="button" onclick="negotiationCtrl.import()" class="btn btn-primary text-center">
+    <button type="button" class="btn btn-primary text-center import">
           Import Negotiations
       </button>
-    <button onclick="negotiationCtrl.clean()" class="btn btn-primary text-center" type="button">
+    <button class="btn btn-primary text-center clean" type="button">
         Clean
     </button>
   </div>
@@ -66,23 +66,12 @@
     </tfoot>
   </table>
 
-  <script src="js/app/polyfill/fetch.js"></script>
-  <script src="js/app/helpers/DateHelper.js"></script>
-
-  <script src="js/app/models/Message.js"></script>
-  <script src="js/app/models/Negotiation.js"></script>
-  <script src="js/app/models/NegotiationList.js"></script>
-  <script src="js/app/controllers/NegotiationController.js"></script>
-  <script src="js/app/views/MessageView.js"></script>
-  <script src="js/app/views/NegotiationView.js"></script>
-  <script src="js/app/services/ProxyFactory.js"></script>
-  <script src="js/app/services/NegotiationService.js"></script>
-  <script src="js/app/services/HttpService.js"></script>
-  <script src="js/app/services/ConnectionFactory.js"></script>
-  <script src="js/app/dao/NegotiationDAO.js"></script>
-
+  <script src="node_modules/systemjs/dist/system.js"></script>
   <script>
-    let negotiationCtrl = new NegotiationController();
+    System.defaultJSExtensions = true;
+    System.import('js/app/boot').catch(function (err) {
+      console.log(err);
+    });
   </script>
 </body>
 
