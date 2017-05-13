@@ -31,8 +31,12 @@ class NegotiationController {
   }
 
   clean() {
-    this._negotiationsList.removeAll();
-    this._message.text = 'Negotiations removes successfuly'
+    this._getDAO()
+      .then(dao => dao.deleteAll())
+      .then(message => {
+        this._negotiationsList.removeAll();
+        this._message.text = message;
+      })
   }
 
   import () {

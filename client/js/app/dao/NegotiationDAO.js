@@ -20,6 +20,21 @@ class NegotiationDAO {
     });
   }
 
+  deleteAll() {
+    return new Promise((resolve, reject) => {
+      const request = this._connection.transaction([this._store], 'readwrite')
+        .objectStore(this._store)
+        .clear();
+
+      request.onsuccess = e => resolve('Negotiations delete successfuly.');
+
+      request.onerror = e => {
+        console.log(e.target.error);
+        reject(e.target.error.name);
+      };
+    });
+  }
+
   findAll() {
     return new Promise((resolve, reject) => {
       const cursor = this._connection.transaction([this._store], 'readwrite')
