@@ -7,7 +7,7 @@ import {NegotiationService} from '../services/NegotiationService';
 import {NegotiationView} from '../views/NegotiationView';
 import {ProxyFactory} from '../services/ProxyFactory';
 
-export class NegotiationController {
+class NegotiationController {
 
   constructor() {
     const $ = document.querySelector.bind(document);
@@ -94,4 +94,10 @@ export class NegotiationController {
       }
     );
   }
+}
+
+const negotiationController = new NegotiationController();
+
+export function currrentInstance() {
+  return negotiationController;
 }

@@ -1,7 +1,7 @@
 import {} from './polyfill/fetch';
-import {NegotiationController} from './controllers/NegotiationController';
+import {currrentInstance} from './controllers/NegotiationController';
 
-const negotiationCtrl = new NegotiationController();
+const negotiationCtrl =  currrentInstance();
 
 document.querySelector('.form').onsubmit = negotiationCtrl.add.bind(negotiationCtrl);
 document.querySelector('.clean').onclick = negotiationCtrl.clean.bind(negotiationCtrl);
