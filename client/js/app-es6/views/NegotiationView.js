@@ -1,3 +1,5 @@
+import {DateHelper} from '../helpers/DateHelper';
+
 export class NegotiationView {
 
   constructor() {

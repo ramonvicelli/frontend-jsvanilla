@@ -1,4 +1,4 @@
-import {Negotiation} from '../model/Negotiation';
+import {Negotiation} from '../models/Negotiation';
 
 export class NegotiationDAO {
 

@@ -1,13 +1,13 @@
 import {DateHelper} from '../helpers/DateHelper';
-import {Message} from '../model/Message';
-import {MessageView} from '../view/MessageView';
-import {Negotiation} from '../model/Negotiation';
-import {NegotiationList} from '../model/NegotiationList';
-import {NegotiationService} from '../service/NegotiationService';
-import {NegotiationView} from '../view/NegotiationView';
-import {ProxyFactory} from '../service/ProxyFactory';
+import {Message} from '../models/Message';
+import {MessageView} from '../views/MessageView';
+import {Negotiation} from '../models/Negotiation';
+import {NegotiationList} from '../models/NegotiationList';
+import {NegotiationService} from '../services/NegotiationService';
+import {NegotiationView} from '../views/NegotiationView';
+import {ProxyFactory} from '../services/ProxyFactory';
 
-class NegotiationController {
+export class NegotiationController {
 
   constructor() {
     const $ = document.querySelector.bind(document);
