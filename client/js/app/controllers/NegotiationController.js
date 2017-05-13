@@ -42,7 +42,7 @@ class NegotiationController {
   import () {
     const service = new NegotiationService();
 
-    Promise.all([service.getByWeek(), service.getByLastWeek(), service.getByDelayedWeek()])
+    service.get()
       .then(negotiations => {
         negotiations
           .reduce((newList, list) => newList.concat(list), [])
