@@ -10,17 +10,24 @@ class NegotiationController {
 
     this._negotiationsList = this._createNegotiationList();
     this._message = this._createMessage($);
+
+    this._getDAO()
+      .then(dao => dao.findAll())
+      .then(negotiations => negotiations.forEach(negotiation => this._negotiationsList.add(negotiation)))
+      .catch(error => this._message.text = error);
   }
 
   add(event) {
     event.preventDefault();
-    try {
-      this._negotiationsList.add(this._createNegotiation());
-      this._message.text = 'Negotiation saves successfully';
-      this._cleanForm();
-    } catch (error) {
-      this._message.text = error;
-    }
+
+    this._getDAO()
+      .then(dao => dao.add(this._createNegotiation()))
+      .then(negotiation => {
+        this._negotiationsList.add(negotiation);
+        this._message.text = 'Negotiation saves successfully';
+        this._cleanForm();;
+      })
+      .catch(error => this._message.text = error);
   }
 
   clean() {
@@ -53,8 +60,8 @@ class NegotiationController {
   _createNegotiation() {
     return new Negotiation(
       DateHelper.stringToDate(this._date.value),
-      this._amount.value,
-      this._value.value
+      new Number(this._amount.value),
+      new Number(this._value.value)
     );
   }
 
@@ -77,5 +84,10 @@ class NegotiationController {
         action: model => new MessageView($('.message')).update(model)
       }
     );
+  }
+
+  _getDAO() {
+    return ConnectionFactory.getConnection()
+      .then(connection => new NegotiationDAO(connection));
   }
 }
