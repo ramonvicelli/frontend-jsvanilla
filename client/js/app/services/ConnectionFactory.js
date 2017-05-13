@@ -1,6 +1,6 @@
 const ConnectionFactory = (() => {
   const dbName = 'frontend-jsvanilla';
-  const version = 1;
+  const version = 2;
   const stores = ['negotiation'];
 
   let close = null;
@@ -52,7 +52,7 @@ const ConnectionFactory = (() => {
         }
 
         connection.createObjectStore(store, {
-          autorIncrement: true
+          autoIncrement: true
         });
       });
     }
