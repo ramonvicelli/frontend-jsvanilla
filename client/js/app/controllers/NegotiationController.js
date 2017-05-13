@@ -11,8 +11,9 @@ class NegotiationController {
     this._negotiationsList = this._createNegotiationList();
     this._message = this._createMessage($);
 
-    this._getDAO()
-      .then(dao => dao.findAll())
+    this._service = new NegotiationService();
+
+    this._service.findAll()
       .then(negotiations => negotiations.forEach(negotiation => this._negotiationsList.add(negotiation)))
       .catch(error => this._message.text = error);
   }
@@ -20,19 +21,17 @@ class NegotiationController {
   add(event) {
     event.preventDefault();
 
-    this._getDAO()
-      .then(dao => dao.add(this._createNegotiation()))
+    this._service.add(this._createNegotiation())
       .then(negotiation => {
         this._negotiationsList.add(negotiation);
         this._message.text = 'Negotiation saves successfully';
-        this._cleanForm();;
+        this._cleanForm();
       })
       .catch(error => this._message.text = error);
   }
 
   clean() {
-    this._getDAO()
-      .then(dao => dao.deleteAll())
+    this._service.deleteAll()
       .then(message => {
         this._negotiationsList.removeAll();
         this._message.text = message;
@@ -42,12 +41,8 @@ class NegotiationController {
 
   import () {
     const service = new NegotiationService();
-    console.log(this);
     service.get()
-      .then(negotiations => negotiations.filter(negotiation =>
-          !this._negotiationsList.negotiations.some(existingNegotiation =>
-            JSON.stringify(existingNegotiation) === JSON.stringify(negotiation)))
-      )
+      .then(negotiations => negotiations.filter(negotiation => !this._negotiationsList.negotiations.some(existingNegotiation => JSON.stringify(existingNegotiation) === JSON.stringify(negotiation))))
       .then(negotiations => {
         negotiations.forEach(negotiation => this._negotiationsList.add(negotiation));
 
@@ -91,10 +86,5 @@ class NegotiationController {
         action: model => new MessageView($('.message')).update(model)
       }
     );
-  }
-
-  _getDAO() {
-    return ConnectionFactory.getConnection()
-      .then(connection => new NegotiationDAO(connection));
   }
 }
