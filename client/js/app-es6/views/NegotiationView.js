@@ -1,5 +1,4 @@
-class NegotiationView {
-
+export class NegotiationView {
 
   constructor() {
     const ID_TABLE = '#negotiations';

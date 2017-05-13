@@ -1,4 +1,4 @@
-class MessageView {
+export class MessageView {
   constructor(element) {
     this._element = element;
   }

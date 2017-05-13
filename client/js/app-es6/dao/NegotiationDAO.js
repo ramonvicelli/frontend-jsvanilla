@@ -1,4 +1,6 @@
-class NegotiationDAO {
+import {Negotiation} from '../model/Negotiation';
+
+export class NegotiationDAO {
 
   constructor(connection) {
     this._connection = connection;

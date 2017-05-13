@@ -1,60 +1,58 @@
-const ConnectionFactory = (() => {
-  const dbName = 'frontend-jsvanilla';
-  const version = 2;
-  const stores = ['negotiation'];
+const dbName = 'frontend-jsvanilla';
+const version = 2;
+const stores = ['negotiation'];
 
-  let close = null;
-  let connection = null;
+let close = null;
+let connection = null;
 
-  return class ConnectionFactory {
+export class ConnectionFactory {
 
-    constructor() {
-      throw new Error("ConnectionFactory can't be instantiated")
-    }
+  constructor() {
+    throw new Error("ConnectionFactory can't be instantiated")
+  }
 
-    static getConnection() {
-      return new Promise((resolve, reject) => {
+  static getConnection() {
+    return new Promise((resolve, reject) => {
 
-        const openRequest = window.indexedDB.open(dbName, version);
+      const openRequest = window.indexedDB.open(dbName, version);
 
-        openRequest.onupgradeneeded = e => this._createStore(e.target.result);
+      openRequest.onupgradeneeded = e => this._createStore(e.target.result);
 
-        openRequest.onsuccess = e => {
-          if (!connection) {
-            connection = e.target.result;
+      openRequest.onsuccess = e => {
+        if (!connection) {
+          connection = e.target.result;
 
-            close = connection.close.bind(connection);
-            connection.close = function () {
-              throw new Error("Close can't be called");
-            };
-          }
-          resolve(connection);
+          close = connection.close.bind(connection);
+          connection.close = function () {
+            throw new Error("Close can't be called");
+          };
         }
-
-        openRequest.onerror = e => {
-          console.log(e.target.error);
-          reject(e.target.error.name);
-        };
-      });
-    }
-
-    static closeConnection() {
-      if (connection) {
-        close();
-        connection = null;
+        resolve(connection);
       }
-    }
 
-    static _createStore(connection) {
-      stores.forEach(store => {
-        if (connection.objectStoreNames.contains(store)) {
-          connection.deleteObjectStore(store);
-        }
+      openRequest.onerror = e => {
+        console.log(e.target.error);
+        reject(e.target.error.name);
+      };
+    });
+  }
 
-        connection.createObjectStore(store, {
-          autoIncrement: true
-        });
-      });
+  static closeConnection() {
+    if (connection) {
+      close();
+      connection = null;
     }
   }
-})();
+
+  static _createStore(connection) {
+    stores.forEach(store => {
+      if (connection.objectStoreNames.contains(store)) {
+        connection.deleteObjectStore(store);
+      }
+
+      connection.createObjectStore(store, {
+        autoIncrement: true
+      });
+    });
+  }
+}
